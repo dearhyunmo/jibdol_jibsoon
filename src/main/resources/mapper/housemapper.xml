@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.repository.HouseRepository">
+ 	
+	<select id="searchByNo" resultType="com.ssafy.dto.HouseDealDto">
+		select a.no,a.city,a.gugun,a.dong,a.AptName,a.dealAmount,a.jibun,a.buildYear,a.dealYear,a.dealMonth,a.dealDay,a.area,a.floor,a.type,a.rentMoney,b.lat,b.lng,b.img
+		from ( select *
+				from housedeal h inner join dongcode d
+				on h.code = d.dongcode) a
+		inner join houseinfo b
+		on a.AptName = b.AptName and a.code = b.dongcode and a.jibun = b.jibun
+		where a.no = #{no}
+	</select>
+  
+  <select id="searchAll" resultType="com.ssafy.dto.HouseDealDto">
+		select a.no,a.city,a.gugun,a.dong,a.AptName as AptName,a.dealAmount,a.jibun,a.buildYear,a.dealYear,a.dealMonth,a.dealDay,a.area,a.floor,a.type,a.rentMoney,b.lat,b.lng,b.img
+		from ( select *
+				from housedeal h inner join dongcode d
+				on h.code = d.dongcode) a
+		inner join houseinfo b
+		on a.AptName = b.AptName and a.code = b.dongcode and a.jibun = b.jibun
+		limit 100
+	</select>
+	
+	<select id="searchByGugun" resultType="com.ssafy.dto.HouseDealDto">
+    select a.no,a.city,a.gugun,a.dong,a.AptName as AptName,a.dealAmount,a.jibun,a.buildYear,a.dealYear,a.dealMonth,a.dealDay,a.area,a.floor,a.type,a.rentMoney,b.lat,b.lng,b.img
+		from ( select *
+				from housedeal h inner join dongcode d
+				on h.code = d.dongcode) a
+		inner join houseinfo b
+		on a.AptName = b.AptName and a.code = b.dongcode and a.jibun = b.jibun
+		where a.gugun like concat('%',#{gugun},'%')
+		order by a.gugun
+		limit 100
+  </select>
+  
+  <select id="searchByDong" resultType="com.ssafy.dto.HouseDealDto">
+    select a.no,a.city,a.gugun,a.dong,a.AptName as AptName,a.dealAmount,a.jibun,a.buildYear,a.dealYear,a.dealMonth,a.dealDay,a.area,a.floor,a.type,a.rentMoney,b.lat,b.lng,b.img
+		from ( select *
+				from housedeal h inner join dongcode d
+				on h.code = d.dongcode) a
+		inner join houseinfo b
+		on a.AptName = b.AptName and a.code = b.dongcode and a.jibun = b.jibun
+		where a.dong like concat('%',#{dong},'%')
+		order by a.dong
+		limit 100
+  </select>       
+      
+  <select id="searchByaptName" resultType="com.ssafy.dto.HouseDealDto">
+    select a.no,a.city,a.gugun,a.dong,a.AptName as AptName,a.dealAmount,a.jibun,a.buildYear,a.dealYear,a.dealMonth,a.dealDay,a.area,a.floor,a.type,a.rentMoney,b.lat,b.lng,b.img
+		from ( select *
+				from housedeal h inner join dongcode d
+				on h.code = d.dongcode) a
+		inner join houseinfo b
+		on a.AptName = b.AptName and a.code = b.dongcode and a.jibun = b.jibun
+		where a.AptName like concat('%',#{aptName},'%')
+		order by a.AptName
+		limit 100
+  </select> 
+  
+</mapper>
+
+ 
